@@ -134,7 +134,7 @@ export const globalStyles = `
   }
   .nav-pills { display: flex; gap: 4px; margin-top: 3px; }
   .nav-pill {
-    font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+    font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700;
     letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none;
     color: var(--text3); border: 1px solid transparent;
     padding: 3px 10px; transition: all .15s; border-radius: 2px;
@@ -143,7 +143,7 @@ export const globalStyles = `
   .nav-pill.active { color: var(--present); border-color: var(--present); }
   .nav-btn {
     background: none; border: 1px solid var(--border); color: var(--text2);
-    font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+    font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700;
     letter-spacing: 1.5px; text-transform: uppercase;
     padding: 6px 12px; cursor: pointer; height: 32px;
     transition: all .15s; display: flex; align-items: center; gap: 5px;
@@ -165,7 +165,7 @@ export const globalStyles = `
     display: flex; flex-direction: column; align-items: center;
   }
   .subtitle {
-    font-size: 11px; letter-spacing: 4px; color: var(--text3);
+    font-size: 14px; letter-spacing: 4px; color: var(--text2); font-weight: 700;
     text-transform: uppercase; margin-bottom: 16px; transition: color .3s;
   }
   .divider {
@@ -201,7 +201,7 @@ export const globalStyles = `
   }
   .hint-card.revealed::after { transform: scaleX(1); }
   .hint-label {
-    font-size: 10px; letter-spacing: 1.5px; color: var(--text2);
+    font-size: 14px; letter-spacing: 1.5px; color: var(--text);
     text-transform: uppercase; transition: color .3s; font-weight: 700;
     white-space: nowrap;
   }
@@ -213,7 +213,7 @@ export const globalStyles = `
   .hint-value.locked { color: var(--text4); font-size: 28px; }
   .hint-action {
     background: none; border: none; color: var(--present);
-    font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+    font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700;
     letter-spacing: 1.5px; text-transform: uppercase;
     cursor: pointer; padding: 0; opacity: .85; transition: opacity .15s; margin-top: 2px;
   }
@@ -290,7 +290,7 @@ export const globalStyles = `
   }
   .legend-item {
     display: flex; align-items: center; gap: 7px;
-    font-size: 10px; letter-spacing: 1.5px; color: var(--text3);
+    font-size: 13px; letter-spacing: 1.5px; color: var(--text2); font-weight: 700;
     text-transform: uppercase; transition: color .3s;
   }
   .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
@@ -355,20 +355,20 @@ export const globalStyles = `
   }
   .modal-result.won  { color: var(--correct); }
   .modal-result.lost { color: #e05a4e; }
-  .modal-word   { font-size: 10px; letter-spacing: 3px; color: var(--text2); margin-bottom: 6px; text-transform: uppercase; transition: color .3s; }
+  .modal-word   { font-size: 14px; letter-spacing: 3px; color: var(--text); margin-bottom: 6px; text-transform: uppercase; transition: color .3s; font-weight: 700; }
   .modal-answer { font-family: 'Bebas Neue', sans-serif; font-size: 42px; letter-spacing: 8px; color: var(--present); margin-bottom: 26px; }
 
   .stats-grid  { display:flex; justify-content:center; gap:28px; margin-bottom:26px; flex-wrap: wrap; }
   .stat        { display:flex; flex-direction:column; align-items:center; gap:4px; }
   .stat-num    { font-family:'Bebas Neue',sans-serif; font-size:40px; color:var(--text); line-height:1; transition:color .3s; }
-  .stat-label  { font-size:9px; letter-spacing:2px; color:var(--text3); text-transform:uppercase; transition:color .3s; }
+  .stat-label  { font-size:12px; font-weight: 700; letter-spacing:2px; color:var(--text2); text-transform:uppercase; transition:color .3s; }
 
   .stats-divider  { height:1px; background:var(--border); margin:18px 0; }
   .win-bar-wrap   { text-align:left; }
-  .win-bar-title  { font-size:9px; letter-spacing:2px; color:var(--text3); text-transform:uppercase; margin-bottom:7px; transition:color .3s; }
+  .win-bar-title  { font-size:12px; font-weight: 700; letter-spacing:2px; color:var(--text2); text-transform:uppercase; margin-bottom:7px; transition:color .3s; }
   .win-bar        { width:100%; background:var(--border); height:5px; }
   .win-bar-fill   { height:100%; background:var(--correct); transition:width .8s ease; }
-  .win-bar-labels { display:flex; justify-content:space-between; font-size:8px; letter-spacing:1px; color:var(--text3); margin-top:4px; transition:color .3s; }
+  .win-bar-labels { display:flex; justify-content:space-between; font-size:11px; font-weight: 700; letter-spacing:1px; color:var(--text2); margin-top:4px; transition:color .3s; }
 
   .play-again-btn {
     background: var(--present); color: #0a0a0a; border: none;
@@ -385,7 +385,7 @@ export const globalStyles = `
     justify-content: center; flex-shrink: 0;
   }
   .shared-letter-label {
-    font-size: 8px; letter-spacing: 2px; color: var(--text3);
+    font-size: 12px; font-weight: 700; letter-spacing: 2px; color: var(--text2);
     text-transform: uppercase; writing-mode: vertical-rl;
     text-orientation: mixed; transition: color .3s;
   }
@@ -403,7 +403,7 @@ export const globalStyles = `
     50%     { box-shadow: 0 0 44px rgba(245,197,24,0.7); }
   }
   .duo-board-label {
-    font-size: 10px; letter-spacing: 3px; color: var(--text3);
+    font-size: 16px; letter-spacing: 4px; color: var(--text);
     text-transform: uppercase; margin-bottom: 10px;
     text-align: center; font-weight: 700; transition: color .3s;
   }
@@ -431,7 +431,7 @@ export const globalStyles = `
     gap: 14px; margin-bottom: 24px;
   }
   .duo-word-chip { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 5px; }
-  .duo-word-sep  { font-size: 10px; letter-spacing: 2px; color: var(--text3); text-transform: uppercase; }
+  .duo-word-sep  { font-size: 14px; font-weight: 700; letter-spacing: 2px; color: var(--text2); text-transform: uppercase; }
 
   .duo-hints-row {
     display: flex; gap: 10px; margin-bottom: 14px;

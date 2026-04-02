@@ -13,6 +13,7 @@ import EndModal from "./components/EndModal";
 import StatsModal from "./components/StatsModal";
 import DuoHintCards from "./components/DuoHintCards";
 import DuoEndModal from "./components/DuoEndModal";
+import Wordris from "./wordris/Wordris";
 import { MAX_GUESSES } from "./data/constants";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -48,6 +49,15 @@ function ClassicWordle({ theme, onToggleTheme, stats, onStatsUpdate }) {
       return () => clearTimeout(t);
     }
   }, [game.gameState]);
+
+  // Scroll to bottom on load/restart to show Board and Keyboard directly. 
+  // Hints will be accessible by scrolling up.
+  useEffect(() => {
+    const t = setTimeout(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
+    }, 50);
+    return () => clearTimeout(t);
+  }, [game.target]);
 
   const winRate = stats.played > 0 ? Math.round((stats.won / stats.played) * 100) : 0;
 
@@ -136,6 +146,15 @@ function DuoWordle({ theme, onToggleTheme, stats, onStatsUpdate }) {
     }
   }, [game.gameState]);
 
+  // Scroll to bottom on load/restart to show Duo Boards and Keyboard directly.
+  // Hints will be accessible by scrolling up.
+  useEffect(() => {
+    const t = setTimeout(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
+    }, 50);
+    return () => clearTimeout(t);
+  }, [game.pair]);
+
   const winRate = stats.played > 0 ? Math.round((stats.won / stats.played) * 100) : 0;
   const remaining = MAX_GUESSES - game.guessCount;
 
@@ -208,7 +227,7 @@ function DuoWordle({ theme, onToggleTheme, stats, onStatsUpdate }) {
         </div>
 
         <div style={{
-          fontSize: 10, letterSpacing: 2, color: "var(--text3)",
+          fontSize: 14, fontWeight: 700, letterSpacing: 2, color: "var(--text2)",
           textTransform: "uppercase", marginBottom: 10,
           position: "relative", zIndex: 1,
         }}>
@@ -252,6 +271,23 @@ function DuoWordle({ theme, onToggleTheme, stats, onStatsUpdate }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// WordrisPage — /wordris
+// ─────────────────────────────────────────────────────────────────────────────
+function WordrisPage({ theme, onToggleTheme }) {
+  const [showStats, setShowStats] = useState(false);
+
+  return (
+    <Wordris
+      theme={theme}
+      onToggleTheme={onToggleTheme}
+      onOpenStats={() => setShowStats(true)}
+      Navbar={Navbar}
+      globalStyles={globalStyles}
+    />
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // App — owns theme + stats, persists both to localStorage
 // Both pages share the same stats pool and theme.
 // ─────────────────────────────────────────────────────────────────────────────
@@ -290,6 +326,7 @@ export default function App() {
         <Route path="/" element={<Navigate to="/wordle" replace />} />
         <Route path="/wordle" element={<ClassicWordle {...sharedProps} />} />
         <Route path="/duo-wordle" element={<DuoWordle    {...sharedProps} />} />
+        <Route path="/wordris" element={<WordrisPage theme={sharedProps.theme} onToggleTheme={sharedProps.onToggleTheme} />} />
         <Route path="*" element={<Navigate to="/wordle" replace />} />
       </Routes>
     </BrowserRouter>

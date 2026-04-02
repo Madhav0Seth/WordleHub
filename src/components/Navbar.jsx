@@ -43,6 +43,7 @@ export default function Navbar({ title = "WORDLE", theme, onToggleTheme, onOpenS
           <div className="nav-pills">
             <a href="/wordle"     className={"nav-pill" + (currentPath === "/wordle"     ? " active" : "")}>Classic</a>
             <a href="/duo-wordle" className={"nav-pill" + (currentPath === "/duo-wordle" ? " active" : "")}>Duo</a>
+            <a href="/wordris"    className={"nav-pill" + (currentPath === "/wordris"    ? " active" : "")}>Wordris</a>
           </div>
         </div>
 
