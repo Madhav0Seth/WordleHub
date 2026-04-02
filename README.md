@@ -1,64 +1,75 @@
-# Wordle — Modular React Project
+# WordleHub — Modular Word Games Collection
+
+A central hub for word games built entirely with React and Vite. It features **Classic Wordle**, a split-screen **Duo Wordle**, and **Wordris** — an arcade-style Tetris word game.
 
 ## Project Structure
 
 ```
 src/
-├── App.jsx                         ← Root: assembles all components, owns theme & modal visibility
+├── App.jsx                         ← Root: Routing across games, theme, modal state
+│
+├── wordris/                        ← WORDRIS (Tetris Word Game)
+│   ├── Wordris.jsx                 ← Main Wordris page component
+│   ├── useWordrisState.js          ← Core game hook (timers, physics, chains)
+│   ├── wordScanner.js              ← Bidirectional dictionary scanning + gravity
+│   ├── letterPool.js               ← Tetris "Bag" Randomizer (Vowels: 3x, Common: 2x, Uncommon: 1x)
+│   ├── constants.js                ← Grid size (12x12), speeds, scoring
+│   ├── wordrisStyles.js            ← Wordris-specific CSS (theme integrated)
+│   └── (UI Components)             ← WordrisGrid, WordrisScoreBar, WordrisSidebar, etc.
 │
 ├── data/
-│   ├── words.js                    ← ANSWERS list + EXTRA_VALID list + ALL_VALID Set
-│   └── constants.js                ← MAX_GUESSES, WORD_LENGTH, KEYBOARD_ROWS, WIN_MESSAGES, VOWELS
+│   ├── words.js                    ← Wordle ANSWERS + EXTRA_VALID lists
+│   ├── wordrisDictionary.js        ← ~3000 valid 3-8 letter words for Wordris
+│   └── constants.js                ← Global constants (MAX_GUESSES, KEYBOARD_ROWS)
 │
 ├── utils/
-│   └── gameLogic.js                ← Pure functions: evaluateGuess, buildKeyStates, countVowels, pickRandomAnswer
+│   └── gameLogic.js                ← Pure Wordle logic (evaluateGuess, buildKeyStates, etc.)
 │
 ├── hooks/
-│   ├── useGameState.js             ← All game state: guesses, current input, game flow, keyboard listener
-│   └── useSound.js                 ← Web Audio API wrapper: keyPress, invalid, reveal, win, lose
+│   ├── useGameState.js             ← Classic/Duo Wordle logic and keyboard listeners
+│   └── useSound.js                 ← Web Audio API wrapper
 │
 ├── styles/
-│   └── globalStyles.js             ← Full CSS string: :root dark vars, [data-theme="light"] vars, all animations
+│   └── globalStyles.js             ← Base CSS, dark/light mode root variables, animations
 │
-└── components/
-    ├── Navbar.jsx                  ← Top bar: brand title, Stats button, theme toggle
-    ├── HintCards.jsx               ← Two one-time reveal hints (vowel count, first letter)
-    ├── Board.jsx                   ← 6×5 tile grid
-    ├── Keyboard.jsx                ← On-screen keyboard with coloured key states
-    ├── EndModal.jsx                ← Win/lose result overlay with stats
-    └── StatsModal.jsx              ← Standalone stats panel (opened from navbar)
+└── components/                     ← SHARED WORDLE UI
+    ├── Navbar.jsx                  ← Top nav with routing pills
+    ├── Board.jsx                   ← Wordle tile grid
+    ├── Keyboard.jsx                ← On-screen keyboard with visual key states
+    ├── HintCards.jsx               ← Game hints
+    └── (Modals)                    ← EndModal, StatsModal
 ```
 
-## What to edit where
+## Game Modes
+
+| Mode | Route | Description |
+|------|-------|-------------|
+| **Classic** | `/` | Standard 6x5 Wordle with hints, statistics, and sound effects. |
+| **Duo Wordle** | `/duo-wordle` | Double the boards! Type once to guess on two side-by-side boards simultaneously. |
+| **Wordris** | `/wordris` | Single letters drop into a 12x12 grid. Form 3+ letter words horizontally/vertically to match them, score points, and trigger gravity chains. |
+
+## What to Edit Where
 
 | I want to…                            | Edit this file               |
 |---------------------------------------|------------------------------|
-| Add / remove answer words             | `data/words.js` → `ANSWERS`  |
-| Add more valid guess words            | `data/words.js` → `EXTRA_VALID` |
-| Change number of guesses / word length| `data/constants.js`          |
-| Change win messages                   | `data/constants.js`          |
-| Change keyboard layout                | `data/constants.js`          |
-| Fix a scoring/evaluation bug          | `utils/gameLogic.js`         |
-| Adjust sound effects                  | `hooks/useSound.js`          |
-| Change game flow / animations         | `hooks/useGameState.js`      |
-| Retheme colours (dark or light)       | `styles/globalStyles.js`     |
+| **Wordris**                           | |
+| Change Wordris letter frequencies     | `wordris/letterPool.js`      |
+| Adjust Wordris drop speed/grid size   | `wordris/constants.js`       |
+| Add custom Wordris words              | `data/wordrisDictionary.js`  |
+| Fix Wordris chain/gravity bugs        | `wordris/wordScanner.js`     |
+| Change Wordris UI styles              | `wordris/wordrisStyles.js`   |
+| **Wordle / Duo**                      | |
+| Add / remove Wordle answers           | `data/words.js`              |
+| Change Number of Guesses / Length     | `data/constants.js`          |
+| Adjust Wordle evaluation algorithms   | `utils/gameLogic.js`         |
 | Change tile / keyboard sizes          | `styles/globalStyles.js`     |
-| Edit the navbar                       | `components/Navbar.jsx`      |
-| Edit the hint cards                   | `components/HintCards.jsx`   |
-| Edit how tiles render                 | `components/Board.jsx`       |
-| Edit keyboard appearance              | `components/Keyboard.jsx`    |
-| Edit the end-of-game modal            | `components/EndModal.jsx`    |
-| Edit the stats modal                  | `components/StatsModal.jsx`  |
-| Add new modals / rearrange layout     | `App.jsx`                    |
+| Retheme overall colours               | `styles/globalStyles.js`     |
 
-## Getting started
+## Getting Started
 
 ```bash
-npm create vite@latest wordle-app -- --template react
-cd wordle-app
-# Replace src/ with the files in this package
 npm install
 npm run dev
 ```
 
-No extra dependencies needed — only React + Vite.
+No heavy UI libraries or physics engines needed — just React + Vite.
