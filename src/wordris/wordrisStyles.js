@@ -17,10 +17,10 @@ export const wordrisStyles = `
     margin-bottom: 16px;
   }
 
-  /* ── 12×12 GRID ──────────────────────────────────────────── */
+  /* ── 10×10 GRID ──────────────────────────────────────────── */
   .wordris-grid {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: repeat(10, 1fr);
     gap: 4px;
     width: 100%;
     max-width: 650px;

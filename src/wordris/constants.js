@@ -2,8 +2,8 @@
 // constants.js — Wordris grid dimensions, speeds, and scoring rules
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const COLS = 12;
-export const ROWS = 12;
+export const COLS = 10;
+export const ROWS = 10;
 export const MIN_WORD_LEN = 3;
 
 // Drop speed

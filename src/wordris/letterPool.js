@@ -34,8 +34,14 @@ function shuffle(array) {
 
 let currentBag = [];
 
-/** Pull a random letter from the shuffled bag */
+const BOMB_CHANCE = 0.03;
+const STAR_CHANCE = 0.04;
+
 export function randomLetter() {
+  const rand = Math.random();
+  if (rand < BOMB_CHANCE) return '💣';
+  if (rand < BOMB_CHANCE + STAR_CHANCE) return '⭐';
+
   if (currentBag.length === 0) {
     currentBag = shuffle(POOL);
   }

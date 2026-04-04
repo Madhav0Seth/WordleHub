@@ -137,6 +137,56 @@ export function useWordrisState() {
 
     const g = gridRef.current.map(row => row.map(c => c ? { ...c } : null));
     g[p.row][p.col] = { letter: p.letter, clearing: false };
+
+    // --- BOMB EXPLOSION LOGIC ---
+    if (p.letter === '💣') {
+      const cellKeys = new Set();
+      let tilesDestroyed = 0;
+
+      for (let r = Math.max(0, p.row - 1); r <= Math.min(ROWS - 1, p.row + 1); r++) {
+        for (let c = Math.max(0, p.col - 1); c <= Math.min(COLS - 1, p.col + 1); c++) {
+          cellKeys.add(`${r},${c}`);
+          if (g[r][c] && (r !== p.row || c !== p.col)) {
+            tilesDestroyed++;
+          }
+          if (g[r][c]) {
+            g[r][c].clearing = true;
+          }
+        }
+      }
+
+      gridRef.current = g;
+      setGrid(g);
+      pieceRef.current = null;
+      setPiece(null);
+      setGameState("clearing");
+
+      const pts = tilesDestroyed * 10;
+      if (tilesDestroyed > 0) {
+        showMsg(`BOMB! +${pts}`, 1500);
+        setScore(s => s + pts);
+      } else {
+        showMsg(`BOMB!`, 1500);
+      }
+
+      setTimeout(() => {
+        const cleared = gridRef.current.map(row => row.map(c => c ? { ...c } : null));
+        cellKeys.forEach(key => {
+          const [r, c] = key.split(",").map(Number);
+          cleared[r][c] = null;
+        });
+        const afterGravity = applyGravity(cleared);
+        gridRef.current = afterGravity;
+        setGrid(afterGravity);
+
+        isLockedRef.current = false;
+        setTimeout(() => checkAndClearRef.current(0), CHAIN_CHECK_DELAY);
+      }, CLEAR_ANIMATION_MS);
+
+      return;
+    }
+    // --- END BOMB EXPLOSION LOGIC ---
+
     gridRef.current = g;
     setGrid(g);
 
@@ -147,7 +197,7 @@ export function useWordrisState() {
       isLockedRef.current = false;
       checkAndClearRef.current(0);
     }, LOCK_DELAY);
-  }, []);
+  }, [showMsg]);
 
   // ── Movement — NO side effects in any updater ───────────────
   const movePiece = useCallback((dir) => {

@@ -20,10 +20,10 @@ export function scanForWords(grid) {
   // Horizontal: each row left → right
   for (let r = 0; r < ROWS; r++) {
     const letters = grid[r].map(cell => (cell ? cell.letter : null));
-    findWordsInLine(letters, (start, len) => {
+    findWordsInLine(letters, (start, len, matchedWord) => {
       const cells = [];
       for (let i = 0; i < len; i++) cells.push({ r, c: start + i });
-      matches.push({ cells, word: letters.slice(start, start + len).join("") });
+      matches.push({ cells, word: matchedWord });
     });
   }
 
@@ -33,10 +33,10 @@ export function scanForWords(grid) {
     for (let r = 0; r < ROWS; r++) {
       letters.push(grid[r][c] ? grid[r][c].letter : null);
     }
-    findWordsInLine(letters, (start, len) => {
+    findWordsInLine(letters, (start, len, matchedWord) => {
       const cells = [];
       for (let i = 0; i < len; i++) cells.push({ r: start + i, c });
-      matches.push({ cells, word: letters.slice(start, start + len).join("") });
+      matches.push({ cells, word: matchedWord });
     });
   }
 
@@ -47,6 +47,20 @@ export function scanForWords(grid) {
  * Find the longest valid words in a 1D array of letters.
  * Greedy: tries longest substrings first, marks used positions.
  */
+function findValidStarWord(template) {
+  if (!template.includes('⭐')) {
+    return WORDRIS_DICT.has(template) ? template : null;
+  }
+  const idx = template.indexOf('⭐');
+  for (let i = 0; i < 26; i++) {
+    const letter = String.fromCharCode(65 + i);
+    const newTemplate = template.substring(0, idx) + letter + template.substring(idx + 1);
+    const match = findValidStarWord(newTemplate);
+    if (match) return match;
+  }
+  return null;
+}
+
 function findWordsInLine(letters, onMatch) {
   const n = letters.length;
   const used = new Array(n).fill(false);
@@ -56,13 +70,14 @@ function findWordsInLine(letters, onMatch) {
       // Skip if any cell is already claimed or empty
       let valid = true;
       for (let i = start; i < start + len; i++) {
-        if (used[i] || letters[i] === null) { valid = false; break; }
+        if (used[i] || letters[i] === null || letters[i] === '💣') { valid = false; break; }
       }
       if (!valid) continue;
 
-      const word = letters.slice(start, start + len).join("");
-      if (WORDRIS_DICT.has(word)) {
-        onMatch(start, len);
+      const template = letters.slice(start, start + len).join("");
+      const matchedWord = findValidStarWord(template);
+      if (matchedWord) {
+        onMatch(start, len, matchedWord);
         for (let i = start; i < start + len; i++) used[i] = true;
       }
     }
