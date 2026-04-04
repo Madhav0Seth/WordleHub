@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // Wordris.jsx — Main page component (composes all Wordris sub-components)
 // ─────────────────────────────────────────────────────────────────────────────
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, memo } from "react";
 import { useWordrisState } from "./useWordrisState";
 import WordrisGrid from "./WordrisGrid";
 import WordrisScoreBar from "./WordrisScoreBar";
@@ -9,6 +9,10 @@ import WordrisSidebar from "./WordrisSidebar";
 import WordrisMobileControls from "./WordrisMobileControls";
 import WordrisGameOver from "./WordrisGameOver";
 import { wordrisStyles } from "./wordrisStyles";
+
+const WordrisStyles = memo(({ globalStyles, wordrisStyles }) => (
+  <style>{globalStyles}{wordrisStyles}</style>
+));
 
 export default function Wordris({ theme, onToggleTheme, onOpenStats, Navbar, globalStyles }) {
   const game = useWordrisState();
@@ -42,7 +46,7 @@ export default function Wordris({ theme, onToggleTheme, onOpenStats, Navbar, glo
 
   return (
     <>
-      <style>{globalStyles}{wordrisStyles}</style>
+      <WordrisStyles globalStyles={globalStyles} wordrisStyles={wordrisStyles} />
       <div className="app">
         <Navbar
           title="WORDRIS"

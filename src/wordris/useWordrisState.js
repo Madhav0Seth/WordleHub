@@ -98,7 +98,16 @@ export function useWordrisState() {
     setScore(s => s + pts);
     setWordsCleared(wc => {
       const next = wc + wordsFound.length;
-      setLevel(Math.floor(next / WORDS_PER_LEVEL) + 1);
+      const oldLevel = Math.floor(wc / WORDS_PER_LEVEL) + 1;
+      const newLevel = Math.floor(next / WORDS_PER_LEVEL) + 1;
+      
+      if (newLevel > oldLevel) {
+        nextLetterRef.current = '💣';
+        setNextLetter('💣');
+        showMsg(`LEVEL ${newLevel}! BOMB EARNED`, 2000);
+      }
+      
+      setLevel(newLevel);
       return next;
     });
 

@@ -15,6 +15,8 @@ export const wordrisStyles = `
     z-index: 1;
     padding: 0 16px;
     margin-bottom: 16px;
+    width: 100%;
+    max-width: 900px;
   }
 
   /* ── 10×10 GRID ──────────────────────────────────────────── */
@@ -23,7 +25,7 @@ export const wordrisStyles = `
     grid-template-columns: repeat(10, 1fr);
     gap: 4px;
     width: 100%;
-    max-width: 650px;
+    max-width: 500px;
     aspect-ratio: 1;
     outline: none;
     background: var(--surface);
@@ -45,7 +47,6 @@ export const wordrisStyles = `
     background: var(--tile-bg);
     border: 1.5px solid var(--tile-border);
     user-select: none;
-    transition: background .15s, border-color .15s, color .15s;
   }
 
   .wordris-cell-placed {

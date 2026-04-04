@@ -13,7 +13,7 @@ export const MIN_SPEED = 150;      // fastest possible speed
 
 // Scoring
 export const SCORE_FORMULA = (wordLength) => wordLength * wordLength * 10;
-export const WORDS_PER_LEVEL = 5;  // words cleared to advance a level
+export const WORDS_PER_LEVEL = 1;  // words cleared to advance a level
 
 // Animation timings (ms)
 export const CLEAR_ANIMATION_MS = 400;

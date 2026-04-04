@@ -6,15 +6,15 @@
 
 export const LETTER_WEIGHTS = {
   // Vowels — 3×
-  A: 3, E: 3, I: 3, O: 3, U: 3,
+  A: 3, E: 3,// I: 3, O: 3, U: 3,
 
   // Common consonants — 2×
-  R: 2, T: 2, P: 2, S: 2, D: 2,
-  F: 2, H: 2, K: 2, L: 2, B: 2,
-  C: 2, N: 2, M: 2, G: 2, W: 2,
+  R: 3//, T: 2, P: 2, S: 2, D: 2,
+  // F: 2, H: 2, K: 2, L: 2, B: 2,
+  // C: 2, N: 2, M: 2, G: 2, W: 2,
 
   // Uncommon — 1×
-  Q: 1, Y: 1, X: 1, Z: 1, J: 1, V: 1,
+  // Q: 1, Y: 1, X: 1, Z: 1, J: 1, V: 1,
 };
 
 const POOL = [];
